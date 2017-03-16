@@ -10,13 +10,15 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 //post请求,  表单提交的时候, req.body
 var bodyParser = require('body-parser');
+//引入session模块
+var session = require('express-session');
+//将session信息保存到数据库中
+var MongoStore = require('connect-mongo')(session);
 
 //引入路由容器
 var index = require('./routes/index');
 var user = require('./routes/user');
 var article = require('./routes/article');
-
-
 
 
 //创建app, 其实一个函数，http.createServer
@@ -41,6 +43,17 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 //设置静态资源文件根路径
 app.use(express.static(path.join(__dirname, 'public')));
+//使用session模块
+app.use(session({
+  secret: 'come',
+  resave: true,
+  saveUninitialized: true,
+  store: new MongoStore({
+    //数据库的连接地址
+    url: require('./dbUrl').dbUrl
+  })
+}));
+
 
 //中间件
 //所有/开头的路由交给index路由容器处理

@@ -74,6 +74,11 @@ router.post('/login', function (req, res) {
         if (!err){ //成功
             if (doc){   //doc不为空
                 console.log('当前用户登陆成功');
+
+                //_id: 主键(外健 populate) email
+                //req.session.user = userInfo;
+                req.session.user = doc;  //将用户登陆的信息保存到session中
+
                 res.redirect('/');
             } else { //doc 为空
                 console.log('当前用户没有注册，请先注册');
@@ -88,6 +93,7 @@ router.post('/login', function (req, res) {
 
 //退出
 router.get('/logout', function (req, res) {
+    req.session.user = null;//清空session中的登陆信息
     res.redirect('/');
 });
 
