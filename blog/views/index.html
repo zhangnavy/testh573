@@ -1,3 +1,23 @@
 <%-include include/header.html%>
-<%=content%>
+
+<%articles.forEach(function(article, index){%>
+<div class="media">
+    <div class="media-left">
+        <a href="#">
+            <img class="media-object" src="<%=article.user.avatar%>" alt="...">
+        </a>
+    </div>
+    <div class="media-body">
+        <h4 class="media-heading"><%=article.title%></h4>
+        <p><%=article.content%></p>
+    </div>
+    <div class="media-bottom">
+        <span>作者：<%=article.user.username%></span>
+        |
+        <span>时间：<%=article.createAt.toLocaleString()%></span>
+    </div>
+</div>
+<%})%>
+
+
 <%-include include/footer.html%>
