@@ -37,21 +37,25 @@ router.post('/reg', function (req, res) {
     userModel.findOne(query, function (err, doc) {
         if (!err){
             if (doc){ //数据库中已经有该用户
-                console.log('当前用户已注册，请更换用户名和密码');
+                //console.log('当前用户已注册，请更换用户名和密码');
+                req.flash('error', '当前用户已注册，请更换用户名和密码');//flash设置
                 res.redirect('back');
             } else { //没有该用户
                 userModel.create(userInfo, function (err, doc) {
                     if (!err) {
-                        console.log('用户登陆成功');
+                        //console.log('用户登陆成功');
+                        req.flash('success', '用户登陆成功');//flash设置
                         res.redirect('/user/login');
                     } else {
-                        console.log('用户登陆失败');
+                        //console.log('用户登陆失败');
+                        req.flash('error', '用户登陆失败');//flash设置
                         res.redirect('back');
                     }
                 });
             }
         } else {
-            console.log('查询数据库失败');
+            req.flash('error', '查询数据库失败');//flash设置
+            //console.log('查询数据库失败');
             res.redirect('back');
         }
     });
@@ -73,19 +77,21 @@ router.post('/login', function (req, res) {
     userModel.findOne(userInfo, function (err, doc) {
         if (!err){ //成功
             if (doc){   //doc不为空
-                console.log('当前用户登陆成功');
-
+                //console.log('当前用户登陆成功');
+                req.flash('success', '当前用户登陆成功');//flash设置
                 //_id: 主键(外健 populate) email
                 //req.session.user = userInfo;
                 req.session.user = doc;  //将用户登陆的信息保存到session中
 
                 res.redirect('/');
             } else { //doc 为空
-                console.log('当前用户没有注册，请先注册');
+                req.flash('error', '当前用户没有注册，请先注册');//flash设置
+                //console.log('当前用户没有注册，请先注册');
                 res.redirect('/user/reg');
             }
         } else { //失败
-            console.log('数据库中查找用户信息失败');
+            req.flash('error', '数据库中查找用户信息失败');//flash设置
+            //console.log('数据库中查找用户信息失败');
             res.redirect('back');
         }
     });
@@ -93,6 +99,7 @@ router.post('/login', function (req, res) {
 
 //退出
 router.get('/logout', function (req, res) {
+    req.flash('success', '退出成功');//flash设置
     req.session.user = null;//清空session中的登陆信息
     res.redirect('/');
 });

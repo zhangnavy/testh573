@@ -14,6 +14,8 @@ var bodyParser = require('body-parser');
 var session = require('express-session');
 //将session信息保存到数据库中
 var MongoStore = require('connect-mongo')(session);
+//引入flash模块
+var flash = require('connect-flash');
 
 //引入路由容器
 var index = require('./routes/index');
@@ -54,11 +56,18 @@ app.use(session({
     })
 }));
 
+//使用flash模块
+app.use(flash());
+
 
 //公共中间件，用来处理所有路由中的公共操作
 app.use(function (req, res, next) {
     //向所有的模版引擎文件都增加user属性
     res.locals.user = req.session.user;//获取session中用户登陆的信息
+    //成功的提示信息
+    res.locals.success = req.flash('success');
+    //失败的提示信息
+    res.locals.error = req.flash('error');
 
     next();
 });
