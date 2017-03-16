@@ -37,6 +37,11 @@
 
 <!--页面提示框-->
 <!--显示成功信息-->
+<%if (success.length){%>
 <div class="alert alert-success" role="alert"><%=success%></div>
+<%}%>
+
 <!--显示失败信息-->
+<%if (error.length){%>
 <div class="alert alert-danger" role="alert"><%=error%></div>
+<%}%>

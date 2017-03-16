@@ -8,13 +8,16 @@ var userModel = require('../mongodb/db').userModel;
 //引入md5加密模块
 var md5 = require('../md5/md5');
 
+//权限控制
+var auth = require('../middleware/auth');
+
 /* GET users listing. */
 router.get('/', function (req, res, next) {
     res.send('respond with a resource');
 });
 
 //注册
-router.get('/reg', function (req, res) {
+router.get('/reg', auth.checkNotLogin, function (req, res) {
     res.render('user/reg', {title: "用户注册", content: '注册页内容'});
 });
 
@@ -25,7 +28,7 @@ router.get('/reg', function (req, res) {
 // 前~后(69)
 
 //用户注册表单提交
-router.post('/reg', function (req, res) {
+router.post('/reg', auth.checkNotLogin, function (req, res) {
     //1: 获取表单提交的内容
     var userInfo = req.body;
     //2: 保存到数据库中
@@ -62,12 +65,12 @@ router.post('/reg', function (req, res) {
 });
 
 //登陆
-router.get('/login', function (req, res) {
+router.get('/login', auth.checkNotLogin, function (req, res) {
     res.render('user/login', {title: "用户登陆", content: '登陆页内容'})
 });
 
 //登陆表单提交请求处理
-router.post('/login', function (req, res) {
+router.post('/login', auth.checkNotLogin, function (req, res) {
     //1: 获取登陆信息
     var userInfo = req.body;
 
@@ -98,7 +101,7 @@ router.post('/login', function (req, res) {
 });
 
 //退出
-router.get('/logout', function (req, res) {
+router.get('/logout', auth.checkLogin, function (req, res) {
     req.flash('success', '退出成功');//flash设置
     req.session.user = null;//清空session中的登陆信息
     res.redirect('/');
