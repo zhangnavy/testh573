@@ -35,6 +35,9 @@ router.post('/reg', auth.checkNotLogin, function (req, res) {
 
     userInfo.password = md5(userInfo.password);//密码加密
 
+    //用户的头像
+    userInfo.avatar = "https://secure.gravatar.com/avatar/"+userInfo.email+'?s=48';
+
     //需求：用户名和密码不能和数据库中的数据完全一样
     var query = {username: userInfo.username, password: userInfo.password};
     userModel.findOne(query, function (err, doc) {
@@ -47,11 +50,11 @@ router.post('/reg', auth.checkNotLogin, function (req, res) {
                 userModel.create(userInfo, function (err, doc) {
                     if (!err) {
                         //console.log('用户登陆成功');
-                        req.flash('success', '用户登陆成功');//flash设置
+                        req.flash('success', '用户注册成功');//flash设置
                         res.redirect('/user/login');
                     } else {
                         //console.log('用户登陆失败');
-                        req.flash('error', '用户登陆失败');//flash设置
+                        req.flash('error', '用户注册失败');//flash设置
                         res.redirect('back');
                     }
                 });
@@ -83,6 +86,7 @@ router.post('/login', auth.checkNotLogin, function (req, res) {
                 //console.log('当前用户登陆成功');
                 req.flash('success', '当前用户登陆成功');//flash设置
                 //_id: 主键(外健 populate) email
+
                 //req.session.user = userInfo;
                 req.session.user = doc;  //将用户登陆的信息保存到session中
 
