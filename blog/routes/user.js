@@ -57,6 +57,27 @@ router.get('/login', function (req, res) {
     res.render('user/login', {title: "用户登陆", content: '登陆页内容'})
 });
 
+//登陆表单提交请求处理
+router.post('/login', function (req, res) {
+    //1: 获取登陆信息
+    var userInfo = req.body;
+    //2: 数据库中查找该用户的注册信息
+    userModel.findOne(userInfo, function (err, doc) {
+        if (!err){ //成功
+            if (doc){   //doc不为空
+                console.log('当前用户登陆成功');
+                res.redirect('/');
+            } else { //doc 为空
+                console.log('当前用户没有注册，请先注册');
+                res.redirect('/user/reg');
+            }
+        } else { //失败
+            console.log('数据库中查找用户信息失败');
+            res.redirect('back');
+        }
+    });
+});
+
 //退出
 router.get('/logout', function (req, res) {
     res.redirect('/');
