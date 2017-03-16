@@ -5,6 +5,9 @@ var router = express.Router();
 //引入数据库中的用户集合
 var userModel = require('../mongodb/db').userModel;
 
+//引入md5加密模块
+var md5 = require('../md5/md5');
+
 /* GET users listing. */
 router.get('/', function (req, res, next) {
     res.send('respond with a resource');
@@ -26,6 +29,8 @@ router.post('/reg', function (req, res) {
     //1: 获取表单提交的内容
     var userInfo = req.body;
     //2: 保存到数据库中
+
+    userInfo.password = md5(userInfo.password);//密码加密
 
     //需求：用户名和密码不能和数据库中的数据完全一样
     var query = {username: userInfo.username, password: userInfo.password};
@@ -61,6 +66,9 @@ router.get('/login', function (req, res) {
 router.post('/login', function (req, res) {
     //1: 获取登陆信息
     var userInfo = req.body;
+
+    userInfo.password = md5(userInfo.password);
+
     //2: 数据库中查找该用户的注册信息
     userModel.findOne(userInfo, function (err, doc) {
         if (!err){ //成功
