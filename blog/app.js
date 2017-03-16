@@ -39,20 +39,29 @@ app.use(logger('dev'));
 // 用来请求请求体是json对象    {age: 18, name:chenchao}
 app.use(bodyParser.json());
 // 用来处理post表单提交   age=18&name=chenchao
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({extended: false}));
 app.use(cookieParser());
 //设置静态资源文件根路径
 app.use(express.static(path.join(__dirname, 'public')));
 //使用session模块
 app.use(session({
-  secret: 'come',
-  resave: true,
-  saveUninitialized: true,
-  store: new MongoStore({
-    //数据库的连接地址
-    url: require('./dbUrl').dbUrl
-  })
+    secret: 'come',
+    resave: true,
+    saveUninitialized: true,
+    store: new MongoStore({
+        //数据库的连接地址
+        url: require('./dbUrl').dbUrl
+    })
 }));
+
+
+//公共中间件，用来处理所有路由中的公共操作
+app.use(function (req, res, next) {
+    //向所有的模版引擎文件都增加user属性
+    res.locals.user = req.session.user;//获取session中用户登陆的信息
+
+    next();
+});
 
 
 //中间件
@@ -64,22 +73,22 @@ app.use('/user', user);
 app.use('/article', article);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.use(function (req, res, next) {
+    var err = new Error('Not Found');
+    err.status = 404;
+    next(err);
 });
 
 // error handler
-app.use(function(err, req, res, next) {   //错误处理中间件
-  // set locals, only providing error in development
-  //给模版引擎文件传递数据第二种方式
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+app.use(function (err, req, res, next) {   //错误处理中间件
+    // set locals, only providing error in development
+    //给模版引擎文件传递数据第二种方式
+    res.locals.message = err.message;
+    res.locals.error = req.app.get('env') === 'development' ? err : {};
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    // render the error page
+    res.status(err.status || 500);
+    res.render('error');
 });
 
 module.exports = app;
