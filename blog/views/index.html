@@ -10,6 +10,9 @@
     <div class="media-body">
         <h4 class="media-heading"><%=article.title%></h4>
         <p><%-article.content%></p>
+        <%if (article.poster){%>
+            <img style="width: 200px; height: 200px;" src="<%=article.poster%>" alt="">
+        <%}%>
     </div>
     <div class="media-bottom">
         <span>作者：<%=article.user.username%></span>

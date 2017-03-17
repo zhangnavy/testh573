@@ -20,6 +20,7 @@ var userModel = mongoose.model('user', userSchema);
 var articleSchema = new mongoose.Schema({
     title: String,
     content: String,
+    poster: String, //上传的图片
     createAt: {
         type: Date,
         default: Date.now()
