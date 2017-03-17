@@ -68,6 +68,8 @@ app.use(function (req, res, next) {
     res.locals.success = req.flash('success');
     //失败的提示信息
     res.locals.error = req.flash('error');
+    //取出session中保存的搜索关键字
+    res.locals.keyword = req.session.keyword;
 
     next();
 });
