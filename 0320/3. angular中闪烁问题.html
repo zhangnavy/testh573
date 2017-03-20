@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--使用angular的时候需要指定angular的作用范围-->
+<html lang="en" ng-app>
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的全局变量</title>
+
+</head>
+<body>
+
+<!--ng-bind作用：用指令中的变量值，替换原来标签中的内容(一般标签中不要存放其他内容)-->
+<div ng-init="name='高佳鑫'" ng-bind="name"><span>高佳鑫真帅</span></div>
+
+</body>
+<script src="angular.js"></script>
+<script>
+    /**
+     * 当引入angular.js文件后，会自动生成一个全局变量angular
+     * 通过angular可以创建模块(angular一切从模块开始)
+     *      通过模块：控制器, 自定义服务, 指令....
+     * */
+    console.log(angular);
+</script>
+</html>

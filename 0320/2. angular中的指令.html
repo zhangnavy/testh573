@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<!--使用angular的时候需要指定angular的作用范围-->
+<html lang="en" ng-app>
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的全局变量</title>
+
+</head>
+<body>
+<!--ng-init指令用来初始化变量-->
+<!--{{}}里面可以存放表达式或变量，取出里面的值显示出来-->
+<div ng-init="name='陈超'">{{name}}</div>
+
+<div ng-init="ary=['张学友', '黎明', '郭富城', '刘德华', '陈超']">{{ary[4]}}</div>
+
+<div ng-init="obj = {name: '鹿晗', age: 25, height: 177}">{{obj.name}}</div>
+
+<div ng-init="name='吴秀波'">{{name=='吴秀波'?'帅':'肯定没我帅'}}</div>
+</body>
+<script src="angular.js"></script>
+<script>
+    /**
+     * 当引入angular.js文件后，会自动生成一个全局变量angular
+     * 通过angular可以创建模块(angular一切从模块开始)
+     *      通过模块：控制器, 自定义服务, 指令....
+     * */
+    console.log(angular);
+</script>
+</html>

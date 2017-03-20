@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<!--使用angular的时候需要指定angular的作用范围-->
+<html lang="en" ng-app>
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的全局变量</title>
+    <style>
+        .sty1{
+            background: yellow;
+        }
+        .sty2{
+            background: red;
+        }
+        .sty3{
+            font-size: 100px;
+        }
+        .sty4{
+            color: #5cb85c;
+        }
+    </style>
+</head>
+<body>
+
+<div></div>
+<button ng-click=""></button>
+
+<!--ng-class作用是在两个样式之间进行切换-->
+    <div ng-init="name='高佳鑫'; flag=false" ng-class="{true: 'sty1', false: 'sty2'}[flag]">{{name}}</div>
+
+<!--只要属性对应的flag值为真，就会拥有前面的样式-->
+<div ng-init="flag1=false; flag2 = false; flag3=false; flag4=false" ng-class="{sty1: flag1, sty2: flag2, sty3: flag3, sty4: flag4}">哲学有</div>
+</body>
+<script src="angular.js"></script>
+<script>
+    /**
+     * 当引入angular.js文件后，会自动生成一个全局变量angular
+     * 通过angular可以创建模块(angular一切从模块开始)
+     *      通过模块：控制器, 自定义服务, 指令....
+     * */
+    console.log(angular);
+</script>
+</html>

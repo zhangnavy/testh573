@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--使用angular的时候需要指定angular的作用范围-->
+<html lang="en" ng-app>
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的全局变量</title>
+
+</head>
+<body>
+
+<!--遍历数组，将数组中的每个成员的值显示到li标签中-->
+<!--<ul ng-init="obj={name:'高佳鑫', age: 25, height: 180, addr: '包头'}">
+    <li ng-repeat="(attr, value) in obj">{{attr+ ':'+ value}}</li>
+</ul>-->
+
+<!--练习: 通过ng-repeat遍历数组phones=[{name:'苹果',age:7},{name:'华为',age:7},{name:'htc',age:7}]-->
+<ul ng-init="phones=[{name:'苹果',age:7},{name:'华为',age:7},{name:'htc',age:7}]">
+    <li ng-repeat="phone in phones track by $index">
+        <span ng-repeat="(attr, value) in phone">{{attr+':'+value}}</span>
+    </li>
+</ul>
+
+</body>
+<script src="angular.js"></script>
+<script>
+    /**
+     * 当引入angular.js文件后，会自动生成一个全局变量angular
+     * 通过angular可以创建模块(angular一切从模块开始)
+     *      通过模块：控制器, 自定义服务, 指令....
+     * */
+    console.log(angular);
+</script>
+</html>
