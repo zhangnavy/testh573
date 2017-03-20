@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<!--使用angular的时候需要指定angular的作用范围-->
+<html lang="en" ng-app>
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的全局变量</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+
+<!--练习: bootstrap中的导航切换, 做出下面的效果(提示: 切换到哪个li的时候设置它的css样式为active, 使用ng-class和ng-click)-->
+<ul class="nav nav-tabs" ng-init="flag='Home'">
+    <li role="presentation" ng-class="{'active': flag=='Home'}" ng-click="flag='Home'"><a href="#">Home</a></li>
+    <li role="presentation" ng-class="{'active': flag=='Profile'}" ng-click="flag='Profile'"><a href="#">Profile</a></li>
+    <li role="presentation" ng-class="{'active': flag=='Messages'}" ng-click="flag='Messages'"><a href="#">Messages</a></li>
+    <li role="presentation" ng-class="{'active': flag=='User'}" ng-click="flag='User'"><a href="#">User</a></li>
+</ul>
+
+</body>
+<script src="angular.js"></script>
+<script>
+
+</script>
+</html>

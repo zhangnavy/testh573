@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<!--使用angular的时候需要指定angular的作用范围-->
+<html lang="en" ng-app>
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的全局变量</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+
+<!--货币过滤器-->
+<input type="text" ng-model="money">
+<p>{{money | currency: '¥'}}</p>
+
+<!--时间过滤器-->
+<p>{{1489997078405|date}}</p>
+<p>{{1489997078405|date: 'yyyy-MM-dd hh-mm-ss'}}</p>
+<p>{{1489997078405|date: 'yyyy-MM-dd HH:mm:ss'}}</p>
+<p>{{1489997078405|date: 'HH:mm:ss'}}</p>
+
+<!--json过滤器-->
+<p>{{{name: '高佳鑫'} | json}}</p>
+
+<!--字符串的大小写转换-->
+<input type="text" ng-model="str">
+<p>{{str|uppercase}}</p>
+<p>{{str|lowercase}}</p>
+
+<!--number过滤器-->
+<input type="text" ng-model="num">
+<p>{{num | number: 3}}</p>
+
+<!--limitTo过滤器-->
+<p>{{123456 | limitTo: 5}}</p>
+
+<p>{{"gao jia xin zhen shuai"|limitTo: 11}}</p>
+
+<p>{{['gao', 'jia', 'xin', 'zhen', 'shuai'] | limitTo: 3}}</p>
+
+<!--orderBy排序过滤器-->
+<ul ng-init="ary=[1, 2, 5, 3, 9, 5, 7, 3]">
+    <li ng-repeat="num in ary | orderBy: num : false track by $index">{{num}}</li>
+</ul>
+
+<ul ng-init="persons=[{name:'chenchao', age: 18}, {name:'liudehua', age: 15}]">
+    <li ng-repeat="person in persons |orderBy : 'name' : false track by $index">
+        <span>{{person.name}}</span>
+        <span>{{person.age}}</span>
+    </li>
+</ul>
+
+<!--filter过滤器-->
+<input type="text" ng-model="query">
+<ul ng-init="arr=['1', '12', '2','545','34']">
+    <li ng-repeat="item in arr | orderBy: item : false | filter: query track by $index">{{item}}</li>
+</ul>
+
+<!--orderBy和filter过滤器都是配合ng-repeat使用-->
+
+
+</body>
+<script src="angular.js"></script>
+<script>
+</script>
+</html>

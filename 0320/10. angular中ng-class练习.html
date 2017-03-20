@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<!--使用angular的时候需要指定angular的作用范围-->
+<html lang="en" ng-app>
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的全局变量</title>
+    <style>
+        .sty1{
+            background: yellow;
+        }
+        .sty2{
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<div ng-init="name='高佳鑫'; flag=true" ng-class="{true: 'sty1', false: 'sty2'}[flag]">{{name}}</div>
+<button ng-click="flag=!flag">切换样式</button>
+
+</body>
+<script src="angular.js"></script>
+<script>
+
+</script>
+</html>
