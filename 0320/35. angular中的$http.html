@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<!--ng-app指定angular作用范围-->
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-repeat</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="angular-csp.css">
+    <!--<style>-->
+    <!--[ng-cloak]{-->
+    <!--display: none;-->
+    <!--}-->
+    <!--</style>-->
+</head>
+<body>
+    <div ng-controller="myCtrl">
+        <ul class="list-group">
+            <li class="list-group-item" ng-repeat="person in persons track by $index">
+                <span>{{person.name}}</span>
+                <span>{{person.age}}</span>
+                <span>{{person.addr}}</span>
+            </li>
+        </ul>
+    </div>
+</body>
+<!--通过script标签引入angular.js文件-->
+<script src="angular.js"></script>
+<script>
+    var app = angular.module('myApp', []);
+
+    app.controller('myCtrl', ['$scope', '$http', function ($scope, $http) {
+        $http({
+            method: 'get',
+            url: './data.json',
+            params: {name: 'liudehua', age: 18}
+            /**
+             * data: 响应体数据
+             * status: 状态码
+             * headers: 函数，响应头函数
+             * config: 配置信息
+             * */
+        }).success(function (data, status, headers, config) {
+            $scope.persons = data;
+
+            console.log(status);
+            console.log(headers('Date'));
+            console.log(config);
+        })
+    }]);
+
+
+</script>
+
+</html>

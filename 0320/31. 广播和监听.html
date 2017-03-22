@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!--ng-app指定angular作用范围-->
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-repeat</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+<div ng-controller="myCtrl1">
+    <button ng-click="btnClick()">广播给子控制器</button>
+    <div ng-controller="myCtrl2">
+        {{info}}
+        <div ng-controller="myCtrl4">{{infoNewNew}}</div>
+    </div>
+
+    <div ng-controller="myCtrl3">{{infoNew}}</div>
+</div>
+</body>
+<!--通过script标签引入angular.js文件-->
+<script src="angular.js"></script>
+<script>
+
+    var app = angular.module('myApp', []);
+
+    app.controller('myCtrl1', ['$scope', function ($scope) {
+        $scope.btnClick = function () {
+            /**
+             * $broadcast: 广播事件，父控制器向子控制器进行广播
+             * 参数一：事件名字
+             * 参数二：传递的数据
+             * */
+            $scope.$broadcast('name', '高佳鑫');
+        }
+    }]);
+    app.controller('myCtrl2', ['$scope', function ($scope) {
+        /**
+         * $on: 监听事件
+         * 参数一：事件的名字
+         * 参数二：监听后触发的方法
+         * */
+        $scope.$on('name', function (event, data) {
+            $scope.info = data;
+        });
+    }]);
+
+    app.controller('myCtrl3', ['$scope', function ($scope) {
+        /**
+         * $on: 监听事件
+         * 参数一：事件的名字
+         * 参数二：监听后触发的方法
+         * */
+        $scope.$on('name', function (event, data) {
+            $scope.infoNew = data;
+        });
+    }]);
+
+    app.controller('myCtrl4', ['$scope', function ($scope) {
+        /**
+         * $on: 监听事件
+         * 参数一：事件的名字
+         * 参数二：监听后触发的方法
+         * */
+        $scope.$on('name', function (event, data) {
+            $scope.infoNewNew = data;
+        });
+    }]);
+
+
+
+
+</script>
+
+</html>

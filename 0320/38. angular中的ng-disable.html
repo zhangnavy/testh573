@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!--ng-app指定angular作用范围-->
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-repeat</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="angular-csp.css">
+    <!--<style>-->
+    <!--[ng-cloak]{-->
+    <!--display: none;-->
+    <!--}-->
+    <!--</style>-->
+</head>
+<body>
+
+<div ng-controller="myCtrl">
+    <input type="button" class="btn btn-primary" ng-click="btnClick()" ng-disabled="flag" value="{{value}}">
+</div>
+</body>
+<!--通过script标签引入angular.js文件-->
+<script src="angular.js"></script>
+<script>
+    var app = angular.module('myApp', []);
+
+    app.controller('myCtrl', ['$scope', '$interval', function ($scope, $interval) {
+        $scope.flag = false;
+        $scope.value = '点我获取验证码';
+        $scope.btnClick = function () {
+            $scope.flag = true;
+            $scope.value = 5;
+            var timer = $interval(function () {
+                $scope.value = parseInt($scope.value) - 1;
+                if (parseInt($scope.value) <= 0){
+                    $scope.flag = false;
+                    $scope.value = '点我获取验证码';
+                    $interval.cancel(timer);
+                    return;
+                }
+            }, 1000);
+        }
+    }]);
+
+</script>
+
+</html>

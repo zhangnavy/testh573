@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<!--ng-app指定angular作用范围-->
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-repeat</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <!--当input框中的内容发生改变的时候触发ng-change事件-->
+    <input type="text" ng-model="val" ng-copy="copy()" ng-cut="cut()" ng-paste="paster()">
+</div>
+</body>
+<!--通过script标签引入angular.js文件-->
+<script src="angular.js"></script>
+<script>
+
+    var app = angular.module('myApp', []);
+
+    app.controller('myCtrl', ['$scope', function ($scope) {
+        $scope.copy = function () {
+            console.log('copy..........');
+        };
+        $scope.cut = function () {
+            console.log('cut..........');
+        };
+        $scope.paster = function () {
+            console.log('paster..........');
+        };
+    }]);
+
+
+
+
+</script>
+
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<!--ng-app指定angular作用范围-->
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-repeat</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <link rel="stylesheet" href="angular-csp.css">
+    <!--<style>-->
+        <!--[ng-cloak]{-->
+            <!--display: none;-->
+        <!--}-->
+    <!--</style>-->
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <div ng-bind="name"></div>
+    <div ng-bind-template="{{name}}{{age}}{{addr}}"></div>
+    <div ng-cloak>
+        {{name}}
+        {{age}}
+        {{addr}}
+    </div>
+</div>
+</body>
+<!--通过script标签引入angular.js文件-->
+<script src="angular.js"></script>
+<script>
+
+    var app = angular.module('myApp', []);
+
+    app.controller('myCtrl', ['$scope', function ($scope) {
+        $scope.name = '高佳鑫';
+        $scope.age = 18;
+        $scope.addr = '包头';
+    }]);
+
+
+</script>
+
+</html>

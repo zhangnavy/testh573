@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<!--ng-app指定angular作用范围-->
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-repeat</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+    {{age}}
+
+    <div ng-controller="myCtrl">
+        {{name}}
+    </div>
+
+
+    <div ng-controller="myCtrlNew">
+        {{name}}
+    </div>
+</body>
+<!--通过script标签引入angular.js文件-->
+<script src="angular.js"></script>
+<script>
+    /**
+     * module: 创建模块, angular中一切从模块开始
+     * 参数一：值和ng-app指令的值对应
+     * 参数二：数组，数组中是当前模块依赖的其他模块(不依赖任何模块写空数组，但是不能省略)
+     *
+     * module: 只传一个参数是获取模块
+     * */
+    var app = angular.module('myApp', []);
+
+
+    app.run(function ($rootScope) {
+        $rootScope.age = 30;
+    });
+
+
+    /**
+     *  controller：创建一个控制器, 创建一个控制器白送一个$scope(省委书记)
+     *
+     *  创建控制器会自动生成一个作用域，控制器之间作用域互相没有影响
+     *
+     * */
+    app.controller('myCtrl', function ($scope) {
+        $scope.name = '高佳鑫';
+    });
+
+    app.controller('myCtrlNew', function ($scope) {
+        $scope.name = '田广荣';
+    })
+
+</script>
+
+</html>

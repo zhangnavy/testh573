@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<!--ng-app指定angular作用范围-->
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-repeat</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+<!--每隔一秒让页面中num的值+1-->
+<div ng-controller="myCtrl">
+    {{num}}
+</div>
+</body>
+<!--通过script标签引入angular.js文件-->
+<script src="angular.js"></script>
+<script>
+    /**
+     * module: 创建模块, angular中一切从模块开始
+     * 参数一：值和ng-app指令的值对应
+     * 参数二：数组，数组中是当前模块依赖的其他模块(不依赖任何模块写空数组，但是不能省略)
+     *
+     * module: 只传一个参数是获取模块
+     * */
+    var app = angular.module('myApp', []);
+
+    /**
+     * $interval: angular提供的实现相关处理函数(服务)
+     * cancel: 取消定时器
+     *
+     * */
+    app.controller('myCtrl', function ($scope, $interval, $timeout) { // mvvm  viewmodel ($scope)
+        $scope.num = 0;
+
+        function addNum(){
+            $scope.num++;
+            if ($scope.num >= 10){
+                return;
+            }
+            $timeout(addNum, 1000);
+        }
+        $timeout(addNum, 1000);
+    });
+
+
+
+
+</script>
+
+</html>

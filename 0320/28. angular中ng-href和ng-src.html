@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<!--ng-app指定angular作用范围-->
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-repeat</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+<div ng-controller="myCtrl">
+    <a ng-href="{{toHref}}" href="http://www.baidu.com">百度</a>
+
+    <img src="timg.jpeg" alt="">
+    <img ng-src="{{toSrc}}" alt="">
+</div>
+</body>
+<!--通过script标签引入angular.js文件-->
+<script src="angular.js"></script>
+<script>
+
+    var app = angular.module('myApp', []);
+
+    app.controller('myCtrl', ['$scope', function ($scope) {
+        $scope.toHref = 'http://www.jd.com';
+        $scope.toSrc = 'timg.jpeg';
+    }]);
+
+
+
+
+</script>
+
+</html>

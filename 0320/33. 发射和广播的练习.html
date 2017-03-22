@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<!--ng-app指定angular作用范围-->
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>ng-repeat</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+<div ng-controller="myCtrlParent">
+    <!--显示总价-->
+    <input type="text" ng-model="total" ng-change="totalChange()">
+    <div ng-controller="myCtrlChild">
+        书的名字: <span>{{name}}</span><br>
+        书的价格: <span>{{price}}</span><br>
+        <!--显示个数-->
+        书的个数: <input type="text" ng-model="count" ng-change="countChange()">
+    </div>
+</div>
+</body>
+<!--通过script标签引入angular.js文件-->
+<script src="angular.js"></script>
+<script>
+
+    var app = angular.module('myApp', []);
+
+    app.controller('myCtrlParent', ['$scope', function ($scope) {
+        $scope.totalChange = function () {
+            $scope.$broadcast('total', $scope.total);
+        };
+        $scope.$on('count', function (event, data) {
+            $scope.total = parseFloat(data);
+        })
+    }]);
+    app.controller('myCtrlChild', ['$scope', function ($scope) {
+        $scope.name = '炼钢';
+        $scope.price = 10;
+
+        $scope.countChange = function () {
+            $scope.$emit('count', parseFloat($scope.price) * parseFloat($scope.count));
+        };
+
+        $scope.$on('total', function (event, data) {
+            $scope.count = Math.floor(parseFloat(data) / parseFloat($scope.price));
+        });
+        $scope.count = 5;
+    }]);
+
+</script>
+
+</html>
