@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的自定义指令</title>
+    <link rel="stylesheet" href="bootstrap.css">
+    <style>
+        .title{
+            width: 100px;
+            height: 30px;
+            background: lightgreen;
+        }
+        .content{
+            width: 100px;
+            height: 100px;
+            background: red;
+        }
+    </style>
+</head>
+<body>
+
+<group>
+    <open title="这是标题1">这是内容1</open>
+    <open title="这是标题2">这是内容2</open>
+    <open title="这是标题3">这是内容3</open>
+</group>
+</body>
+<script src="angular.js"></script>
+<script>
+    //创建模块
+    var app = angular.module('myApp', []);
+
+    app.directive('group', function () {
+        return {
+            controller: function () {
+                var scopeAry = [];
+                //将group中每个open的scope添加到数组中
+                this.add = function (scope) {
+                    scopeAry.push(scope);
+                };
+                this.changeFlag = function (scope) {
+                    for (var i=0; i<scopeAry.length; i++){
+                        if (scopeAry[i] != scope){
+                            scopeAry[i].flag = false;
+                        }
+                    }
+                }
+            }
+        }
+    });
+    app.directive('open', function () {
+        return {
+            require: '^group',
+            templateUrl: './views/open.html',
+            transclude: true,
+            scope: {
+                title: '@'
+            },
+            link: function (scope, element, attrs, groupController) {
+                scope.flag = false;
+
+                groupController.add(scope); //把每个open放到group的数组中
+
+                scope.click = function () {
+                    scope.flag = !scope.flag;
+
+                    groupController.changeFlag(scope);
+                }
+            }
+        }
+    })
+
+
+
+</script>
+</html>
