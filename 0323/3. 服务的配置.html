@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的服务</title>
+</head>
+<body>
+
+<div ng-controller="myCtrl">
+    <input type="text" ng-model="num1">
+    +
+    <input type="text" ng-model="num2">
+    =
+    {{result}}
+    <br>
+
+    <button ng-click="btnClick()">求和</button>
+</div>
+
+</body>
+<script src="angular.js"></script>
+<script>
+    var app = angular.module('myApp', []);
+
+    //配置服务  = 服务名 + provider
+    app.config(function (myProvider) {
+        myProvider.currency = '#';
+    });
+
+    /**
+     * provider: 创建服务的方式
+     * 参数一: 自定义服务的名字
+     * 参数二：方法，this.$get, return {} 服务的配置
+     *
+     * 创建服务的方式：provider, factory, service, value, constant  (服务的装饰：decorator)
+     * 真正创建服务：provider
+     * */
+    app.provider('my', function () {
+        this.currency = '$';
+        var _this = this;
+
+        this.$get = function () {
+
+            return { //真正服务的配置
+                '+': function (num1, num2) {
+                    return _this.currency + (parseInt(num1) + parseInt(num2));
+                }
+            }
+        };
+    });
+
+    app.controller('myCtrl', function ($scope, my) {
+        $scope.btnClick = function () {
+            $scope.result = my['+']($scope.num1, $scope.num2);
+        }
+    });
+</script>
+</html>

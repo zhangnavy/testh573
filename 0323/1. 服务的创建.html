@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的服务</title>
+</head>
+<body>
+
+<div ng-controller="myCtrl">
+    <input type="text" ng-model="num1">
+    +
+    <input type="text" ng-model="num2">
+    =
+    {{result}}
+    <br>
+
+    <button ng-click="btnClick()">求和</button>
+</div>
+
+</body>
+<script src="angular.js"></script>
+<script>
+    var app = angular.module('myApp', []);
+
+    app.controller('myCtrl', function ($scope, $http) {
+        $scope.btnClick = function () {
+            $scope.result = parseInt($scope.num1) + parseInt($scope.num2);
+        }
+    })
+</script>
+</html>
