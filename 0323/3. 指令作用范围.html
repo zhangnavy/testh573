@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的自定义指令</title>
+</head>
+<body>
+
+<!--指令作为元素使用-->
+<my-dir></my-dir>
+
+<!--指令作为类名使用-->
+<div class="my-dir"></div>
+
+<!--指令作为注释使用-->
+<!-- directive:my-dir -->
+
+<!--指令作为属性使用-->
+<div my-dir></div>
+
+</body>
+<script src="angular.js"></script>
+<script>
+    //创建模块
+    var app = angular.module('myApp', []);
+    console.log(app);
+
+    /**
+     *  directive: 创建自定义指令的, 通过app模块创建
+     *  参数一：创建的自定义指令的名字
+     *  参数二：自定义指令的配置函数(return {})
+     * */
+    app.directive('myDir', function () {
+        return {
+            /**
+             * template: 配置模版信息
+             * template模版内容会最终替换原来指令中所有内容
+             * */
+            template: '<div>高佳鑫</div>',
+            /**
+             * restrict: 指令的使用范围
+             * E: element 元素
+             * C: class 类名
+             * M: comment 注释
+             * A: attribute 属性
+             *
+             * 默认使用范围是: E和A
+             * */
+            //restrict: 'ECMA',
+            /**
+             * replace: 是否替换原来自定义指令元素
+             * */
+            //replace: true
+        }
+    });
+
+</script>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的自定义指令</title>
+    <link rel="stylesheet" href="bootstrap.css">
+</head>
+<body>
+
+<panel title="这是标题1">这也是内容1</panel>
+<panel title="这是标题2">这也是内容2</panel>
+<panel title="这是标题3">这也是内容3</panel>
+<panel title="这是标题4">这也是内容4</panel>
+
+</body>
+<script src="angular.js"></script>
+<script>
+    //创建模块
+    var app = angular.module('myApp', []);
+
+    app.run(function ($rootScope) {
+        $rootScope.name = '刘青云';
+    });
+
+    /**
+     *  directive: 创建自定义指令的, 通过app模块创建
+     *  参数一：创建的自定义指令的名字
+     *  参数二：自定义指令的配置函数(return {})
+     *
+     *  自定义指令不会开辟自己的私有作用域
+     * */
+    app.directive('panel', function () {
+        return {
+            templateUrl: './views/panel.html',
+            /**
+             * transclude一定是配合ng-transclude一起使用
+             * 可以将原来自定义指令中的内容保留，插入到使用ng-transclude指令的元素中
+             * */
+            transclude: true,
+            /**
+             * scope: 形成自己的私有作用域，和父作用域进行分离
+             * scope: true: 虽然有自己的作用域，但是仍然能够访问父作用域中的内容
+             * scope: {} : 有自己的作用域，并且完全断绝父子关系, 不能访问父级作用域
+             * */
+            //scope: true,
+            scope: {},
+            link: function (scope, element, attrs) {
+                scope.title = attrs.title;
+                scope.content = attrs.content;
+            }
+        }
+    });
+    /**
+     * 指令的分类：
+     * 装饰型指令：原来的元素基础上封装一些功能性的代码
+     * 组件型指令：将多个基础元素组成复杂元素
+     * */
+
+</script>
+</html>

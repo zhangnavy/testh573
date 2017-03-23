@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的自定义指令</title>
+</head>
+<body>
+
+</body>
+<script src="angular.js"></script>
+<script>
+    //创建模块
+    var app = angular.module('myApp', []);
+    console.log(app);
+
+    /**
+     *  directive: 创建自定义指令的, 通过app模块创建
+     *  参数一：创建的自定义指令的名字
+     *  参数二：自定义指令的配置函数(return {})
+     * */
+    app.directive('myDir', function () {
+        return {
+
+        }
+    });
+
+</script>
+</html>

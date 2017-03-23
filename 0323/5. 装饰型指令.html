@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+    <meta charset="UTF-8">
+    <title>angular中的自定义指令</title>
+</head>
+<body>
+
+<!--指令作为元素使用-->
+<!--<my-dir></my-dir>-->
+
+<!--指令作为类名使用-->
+<!--<div class="my-dir"></div>-->
+
+<!--指令作为注释使用-->
+<!-- directive:my-dir -->
+
+<!--指令作为属性使用-->
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+<div my-dir>drag me</div>
+
+
+</body>
+<script src="angular.js"></script>
+<script>
+    //创建模块
+    var app = angular.module('myApp', []);
+    console.log(app);
+
+    /**
+     *  directive: 创建自定义指令的, 通过app模块创建
+     *  参数一：创建的自定义指令的名字
+     *  参数二：自定义指令的配置函数(return {})
+     * */
+    app.directive('myDir', function () {
+        return {
+            /**
+             * template: 配置模版信息
+             * template模版内容会最终替换原来指令中所有内容
+             * */
+            template: '<div>高佳鑫</div>',
+            /**
+             * restrict: 指令的使用范围
+             * E: element 元素
+             * C: class 类名
+             * M: comment 注释
+             * A: attribute 属性
+             *
+             * 默认使用范围是: E和A
+             * */
+            //restrict: 'ECMA',
+            /**
+             * replace: 是否替换原来自定义指令元素
+             * */
+            //replace: true
+            /**
+             * link函数中用来封装自定义指令的相关功能和设置元素的样式效果
+             * scope: 指令中模版中出现数据
+             * element: 模版中元素(jquery元素使用)
+             * attrs: 自定义指令元素中的属性
+             * */
+            link: function (scope, element, attrs) {
+                element.css({width: "100px", height: '100px', background: 'red', position: 'absolute', left: '0', top: '0'});
+                element.on('mousedown', function (ev) {
+                    var disX = ev.pageX - this.offsetLeft;
+                    var disY = ev.pageY - this.offsetTop;
+                    angular.element(document).on('mousemove', function (ev) {
+                        var changeX = ev.pageX - disX;
+                        var changeY = ev.pageY - disY;
+
+                        element.css({
+                            left: changeX +'px',
+                            top: changeY +'px'
+                        });
+                    });
+
+                    angular.element(document).on('mouseup', function (ev) {
+                        angular.element(document).off();
+                    });
+
+                    ev.preventDefault();
+                })
+            }
+        }
+    });
+    /**
+     * 指令的分类：
+     * 装饰型指令：原来的元素基础上封装一些功能性的代码
+     * 组件型指令：将多个基础元素组成复杂元素
+     * */
+
+</script>
+</html>
