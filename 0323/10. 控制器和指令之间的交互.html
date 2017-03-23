@@ -10,7 +10,7 @@
 <div ng-controller="myCtrl">
     <!--<panel title="这是一个标题">这也是内容1</panel>-->
     <!--<panel title="{{title}}">这也是内容2</panel>-->
-    <panel title="title">这是内容3</panel>
+    <panel title="title" click="click()">这是内容3</panel>
 </div>
 
 </body>
@@ -22,6 +22,9 @@
 
     app.controller('myCtrl', function ($scope) {
         $scope.title = '这是一个标题';
+        $scope.click = function () {
+            alert('你不要点我，我很害羞');
+        }
     });
 
     /**
@@ -40,11 +43,15 @@
              * */
             transclude: true,
             scope: {
-                title: '@title' //等价于scope.title = attrs.title 取出一个常量字符串
-                // title: '=' //等价于scope.title = attrs.title 取出一个title属性对应的变量的值
+                // title: '@title' //等价于scope.title = attrs.title 取出一个常量字符串
+                title: '=', //等价于scope.title = attrs.title 取出一个title属性对应的变量的值
+                click: '&click'
             },
             link: function (scope, element, attrs) {
                 //scope.title = attrs.title;
+                /*scope.btnClick = function () {
+                    alert('你瞅我干啥');
+                }*/
             }
         }
     });
